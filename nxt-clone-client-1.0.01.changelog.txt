@@ -1,0 +1,15 @@
+Release 1.0.01
+
+https://www.birdlance.com/
+
+sha256 checksums:
+
+d6bbb3e47eb95f8e7dd5db025aa4d15e76af4c2f041dee4923ed2de9d6c6792c *Birdlance-client-1.0.01.exe
+3d9dfeef2eaf558ddcca4f2b0e5c4e812b0f3a127a189ac2ae2a162cc92f4eb2 *Birdlance-client-1.0.01.jar
+
+
+Change log:
+
+The birdlance wallet will now be installed.
+
+
