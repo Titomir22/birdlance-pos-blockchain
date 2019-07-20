@@ -25,7 +25,7 @@ Since the Birdlance Blockchain doesn't require any mining, but rewards are gaine
 
   - click on the Birdlance icon, or start:
   - Windows: `run.bat`
-  - Unix: `./run.sh`
+  - Unix/Mac: `./run.sh` (compile with sh .\compile.sh first)
   
   - wait for the JavaFX wallet window to open
   - on platforms without JavaFX, select "open wallet in browser" from the tray icon or open http://localhost:9085/index.html in a browser
