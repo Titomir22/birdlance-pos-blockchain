@@ -1,6 +1,6 @@
 /*
  * Copyright © 2013-2016 The Nxt Core Developers.
- * Copyright © 2016-2019 Jelurida IP B.V.
+ * Copyright © 2016-2018 Jelurida IP B.V.
  *
  * See the LICENSE.txt file at the top-level directory of this distribution
  * for licensing information.
@@ -104,8 +104,8 @@ public final class Peers {
     static final boolean useProxy = System.getProperty("socksProxyHost") != null || System.getProperty("http.proxyHost") != null;
     static final boolean isGzipEnabled;
 
-    private static final int DEFAULT_PEER_PORT = 47874;
-    private static final int TESTNET_PEER_PORT = 46874;
+    private static final int DEFAULT_PEER_PORT = 9080;
+    private static final int TESTNET_PEER_PORT = 9090;
     private static final String myPlatform;
     private static final String myAddress;
     private static final int myPeerServerPort;

@@ -1,6 +1,6 @@
 /*
  * Copyright © 2013-2016 The Nxt Core Developers.
- * Copyright © 2016-2019 Jelurida IP B.V.
+ * Copyright © 2016-2018 Jelurida IP B.V.
  *
  * See the LICENSE.txt file at the top-level directory of this distribution
  * for licensing information.
@@ -19,8 +19,6 @@ package nxt;
 import nxt.crypto.Crypto;
 import nxt.crypto.EncryptedData;
 import nxt.util.Convert;
-import nxt.util.bbh.LengthRwPrimitiveType;
-import nxt.util.bbh.StringRw;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -30,9 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import static nxt.util.bbh.LengthRwPrimitiveType.BYTE;
-import static nxt.util.bbh.LengthRwPrimitiveType.SHORT;
 
 public interface Attachment extends Appendix {
 
@@ -146,16 +141,14 @@ public interface Attachment extends Appendix {
     };
 
     final class MessagingAliasAssignment extends AbstractAttachment {
-        public static final StringRw ALIAS_NAME_RW = new StringRw(BYTE, Constants.MAX_ALIAS_LENGTH);
-        public static final StringRw ALIAS_URI_RW = new StringRw(SHORT, Constants.MAX_ALIAS_URI_LENGTH);
 
         private final String aliasName;
         private final String aliasURI;
 
         MessagingAliasAssignment(ByteBuffer buffer) throws NxtException.NotValidException {
             super(buffer);
-            aliasName = ALIAS_NAME_RW.readFromBuffer(buffer).trim();
-            aliasURI = ALIAS_URI_RW.readFromBuffer(buffer).trim();
+            aliasName = Convert.readString(buffer, buffer.get(), Constants.MAX_ALIAS_LENGTH).trim();
+            aliasURI = Convert.readString(buffer, buffer.getShort(), Constants.MAX_ALIAS_URI_LENGTH).trim();
         }
 
         MessagingAliasAssignment(JSONObject attachmentData) {
@@ -211,7 +204,7 @@ public interface Attachment extends Appendix {
 
         MessagingAliasSell(ByteBuffer buffer) throws NxtException.NotValidException {
             super(buffer);
-            this.aliasName = MessagingAliasAssignment.ALIAS_NAME_RW.readFromBuffer(buffer);
+            this.aliasName = Convert.readString(buffer, buffer.get(), Constants.MAX_ALIAS_LENGTH);
             this.priceNQT = buffer.getLong();
         }
 
@@ -265,7 +258,7 @@ public interface Attachment extends Appendix {
 
         MessagingAliasBuy(ByteBuffer buffer) throws NxtException.NotValidException {
             super(buffer);
-            this.aliasName = MessagingAliasAssignment.ALIAS_NAME_RW.readFromBuffer(buffer);
+            this.aliasName = Convert.readString(buffer, buffer.get(), Constants.MAX_ALIAS_LENGTH);
         }
 
         MessagingAliasBuy(JSONObject attachmentData) {
@@ -310,7 +303,7 @@ public interface Attachment extends Appendix {
 
         MessagingAliasDelete(final ByteBuffer buffer) throws NxtException.NotValidException {
             super(buffer);
-            this.aliasName = MessagingAliasAssignment.ALIAS_NAME_RW.readFromBuffer(buffer);
+            this.aliasName = Convert.readString(buffer, buffer.get(), Constants.MAX_ALIAS_LENGTH);
         }
 
         MessagingAliasDelete(final JSONObject attachmentData) {
@@ -742,16 +735,14 @@ public interface Attachment extends Appendix {
     }
 
     final class MessagingAccountInfo extends AbstractAttachment {
-        public static final StringRw NAME_RW = new StringRw(BYTE, Constants.MAX_ACCOUNT_NAME_LENGTH);
-        public static final StringRw DESCRIPTION_RW = new StringRw(SHORT, Constants.MAX_ACCOUNT_DESCRIPTION_LENGTH);
 
         private final String name;
         private final String description;
 
         MessagingAccountInfo(ByteBuffer buffer) throws NxtException.NotValidException {
             super(buffer);
-            this.name = NAME_RW.readFromBuffer(buffer);
-            this.description = DESCRIPTION_RW.readFromBuffer(buffer);
+            this.name = Convert.readString(buffer, buffer.get(), Constants.MAX_ACCOUNT_NAME_LENGTH);
+            this.description = Convert.readString(buffer, buffer.getShort(), Constants.MAX_ACCOUNT_DESCRIPTION_LENGTH);
         }
 
         MessagingAccountInfo(JSONObject attachmentData) {
@@ -802,16 +793,14 @@ public interface Attachment extends Appendix {
     }
 
     final class MessagingAccountProperty extends AbstractAttachment {
-        public static final StringRw PROPERTY_NAME_RW = new StringRw(BYTE, Constants.MAX_ACCOUNT_PROPERTY_NAME_LENGTH);
-        public static final StringRw PROPERTY_VALUE_RW = new StringRw(BYTE, Constants.MAX_ACCOUNT_PROPERTY_VALUE_LENGTH);
 
         private final String property;
         private final String value;
 
         MessagingAccountProperty(ByteBuffer buffer) throws NxtException.NotValidException {
             super(buffer);
-            this.property = PROPERTY_NAME_RW.readFromBuffer(buffer).trim();
-            this.value = PROPERTY_VALUE_RW.readFromBuffer(buffer).trim();
+            this.property = Convert.readString(buffer, buffer.get(), Constants.MAX_ACCOUNT_PROPERTY_NAME_LENGTH).trim();
+            this.value = Convert.readString(buffer, buffer.get(), Constants.MAX_ACCOUNT_PROPERTY_VALUE_LENGTH).trim();
         }
 
         MessagingAccountProperty(JSONObject attachmentData) {
@@ -906,8 +895,6 @@ public interface Attachment extends Appendix {
     }
 
     final class ColoredCoinsAssetIssuance extends AbstractAttachment {
-        public static final StringRw NAME_RW = new StringRw(BYTE, Constants.MAX_ASSET_NAME_LENGTH);
-        public static final StringRw DESCRIPTION_RW = new StringRw(SHORT, Constants.MAX_ASSET_DESCRIPTION_LENGTH);
 
         private final String name;
         private final String description;
@@ -916,8 +903,8 @@ public interface Attachment extends Appendix {
 
         ColoredCoinsAssetIssuance(ByteBuffer buffer) throws NxtException.NotValidException {
             super(buffer);
-            this.name = NAME_RW.readFromBuffer(buffer);
-            this.description = DESCRIPTION_RW.readFromBuffer(buffer);
+            this.name = Convert.readString(buffer, buffer.get(), Constants.MAX_ASSET_NAME_LENGTH);
+            this.description = Convert.readString(buffer, buffer.getShort(), Constants.MAX_ASSET_DESCRIPTION_LENGTH);
             this.quantityQNT = buffer.getLong();
             this.decimals = buffer.get();
         }
@@ -1921,9 +1908,6 @@ public interface Attachment extends Appendix {
     }
 
     final class MonetarySystemCurrencyIssuance extends AbstractAttachment {
-        public static final StringRw NAME_RW = new StringRw(BYTE, Constants.MAX_CURRENCY_NAME_LENGTH);
-        public static final StringRw CODE_RW = new StringRw(BYTE, Constants.MAX_CURRENCY_CODE_LENGTH);
-        public static final StringRw DESCRIPTION_RW = new StringRw(SHORT, Constants.MAX_CURRENCY_DESCRIPTION_LENGTH);
 
         private final String name;
         private final String code;
@@ -1942,9 +1926,9 @@ public interface Attachment extends Appendix {
 
         MonetarySystemCurrencyIssuance(ByteBuffer buffer) throws NxtException.NotValidException {
             super(buffer);
-            this.name = NAME_RW.readFromBuffer(buffer);
-            this.code = CODE_RW.readFromBuffer(buffer);
-            this.description = DESCRIPTION_RW.readFromBuffer(buffer);
+            this.name = Convert.readString(buffer, buffer.get(), Constants.MAX_CURRENCY_NAME_LENGTH);
+            this.code = Convert.readString(buffer, buffer.get(), Constants.MAX_CURRENCY_CODE_LENGTH);
+            this.description = Convert.readString(buffer, buffer.getShort(), Constants.MAX_CURRENCY_DESCRIPTION_LENGTH);
             this.type = buffer.get();
             this.initialSupply = buffer.getLong();
             this.reserveSupply = buffer.getLong();
