@@ -1,3 +1,10 @@
+Birdlance update to 1.0.02:
+This is an update adapted from NXT-client 1.11.15:
+This is a critical bugfix release. IMMEDIATE update is mandatory for everyone.
+Fixed validation of string fields length in transaction attachments.
+
+--------------------------------------------------------------------------------
+
 nxt-client-1.11.13:
 
 Desktop wallet performance optimizations to reduce excessive load.

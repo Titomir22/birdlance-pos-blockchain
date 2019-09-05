@@ -4,8 +4,8 @@ https://www.birdlance.com/
 
 sha256 checksums:
 
-d6bbb3e47eb95f8e7dd5db025aa4d15e76af4c2f041dee4923ed2de9d6c6792c *Birdlance-client-1.0.01.exe
-3d9dfeef2eaf558ddcca4f2b0e5c4e812b0f3a127a189ac2ae2a162cc92f4eb2 *Birdlance-client-1.0.01.jar
+95cabf30de92a3755cefb51b326b2cf87dd7bc05672aed947c93733b32b97971 *Birdlance-client-1.0.02.exe
+eac9855a1b1eb1d560ddebfc72ba45089815435fa2d334a0c6f8e66242579254 *Birdlance-client-1.0.02.jar
 
 
 Change log:
